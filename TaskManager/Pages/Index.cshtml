@@ -1,0 +1,56 @@
+﻿@page
+@model TaskManager.Pages.IndexModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Task Manager</title>
+</head>
+<body>
+    <h1>Task Manager</h1>
+
+    <form id="addTaskForm">
+        <input type="text" id="taskName" placeholder="Task Name" />
+        <button type="button" id="addTaskBtn">Add Task</button>
+    </form>
+
+    <ul id="taskList"></ul>
+
+    <script>
+        const addBtn = document.getElementById('addTaskBtn');
+        const taskList = document.getElementById('taskList');
+
+        addBtn.addEventListener('click', async () => {
+            const taskName = document.getElementById('taskName').value;
+            if (!taskName) return alert("Enter a task name");
+
+            // Call API
+            const response = await fetch('/api/task', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: taskName })
+            });
+
+            const task = await response.json();
+            const li = document.createElement('li');
+            li.textContent = task.name + " (ID: " + task.id + ")";
+            taskList.appendChild(li);
+
+            document.getElementById('taskName').value = '';
+        });
+
+        // Load existing tasks
+        async function loadTasks() {
+            const response = await fetch('/api/task');
+            const tasks = await response.json();
+            tasks.forEach(task => {
+                const li = document.createElement('li');
+                li.textContent = task.name + " (ID: " + task.id + ")";
+                taskList.appendChild(li);
+            });
+        }
+
+        loadTasks();
+    </script>
+</body>
+</html>

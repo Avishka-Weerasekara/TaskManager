@@ -1,0 +1,11 @@
+@TaskManager_HostAddress = http://localhost:5024
+
+GET {{TaskManager_HostAddress}}/todos/
+Accept: application/json
+
+###
+
+GET {{TaskManager_HostAddress}}/todos/1
+Accept: application/json
+
+###
