@@ -26,7 +26,7 @@ jobs:
         run: dotnet build --no-restore --configuration Release
 
       - name: Run Unit Tests
-        run: dotnet test TaskManager.Tests/TaskManager.Tests.csproj --no-build --verbosity normal
+        run: dotnet test TaskManager.Tests/TaskManager.Tests.csproj --verbosity normal
 
       - name: Install Chrome
         uses: browser-actions/setup-chrome@v1
@@ -34,4 +34,4 @@ jobs:
           chrome-version: latest
 
       - name: Run Selenium UI Tests
-        run: dotnet test TaskManager.Tests/TaskManager.Tests.csproj --filter "Category=Selenium" --no-build --verbosity normal
+        run: dotnet test TaskManager.Tests/TaskManager.Tests.csproj --filter "Category=Selenium" --verbosity normal
